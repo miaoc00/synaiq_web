@@ -1,0 +1,63 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# testing
+/coverage
+
+# next.js
+/.next/
+/.vinext/
+/out/
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# env files (can opt-in for committing if needed)
+.env*
+
+# vercel
+.vercel
+
+/dist/
+/.wrangler/
+/outputs/
+/work/
+
+# local npm cache
+/.npm-cache/
+
+# original brand source files
+/品牌素材/
+
+# Microsoft Office temporary files
+~$*
+
+# internal content source
+/文字內容.xlsx
+
+# internal planning and audit documents
+/brand-assets-audit.md
+/contact-info.md
+/content-audit.md
+/scroll_parallax_assets_guide.md
+/網站架構.md
+/網站素材提供清單.md
+
+# unused starter examples
+/examples/
