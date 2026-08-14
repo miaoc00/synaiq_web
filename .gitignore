@@ -61,3 +61,6 @@ yarn-error.log*
 
 # unused starter examples
 /examples/
+
+# local sheet runtime
+/.sheet_runtime/
