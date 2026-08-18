@@ -95,7 +95,7 @@ function renderStatusBlock(status) {
     : `偵測到 ${status.pendingMarkers} 個待補／待確認標記（文案仍需人工確認）`;
   const verificationSummary = status.historicalVerification === "未找到交接紀錄"
     ? "未找到歷史驗證紀錄"
-    : `交接紀錄顯示 ${status.historicalVerification} 曾通過；本次未重新執行`;
+    : `交接紀錄顯示 ${status.historicalVerification} 曾通過；Reporter 不會自行執行驗證指令`;
   const nextSteps = [];
 
   if (status.pendingMarkers > 0) {

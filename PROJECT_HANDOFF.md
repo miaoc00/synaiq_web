@@ -56,7 +56,7 @@ SynaiQ 是一個以 **AGI 與企業知識中樞**為主要定位的企業官網�
 
 ### Wally 系列
 
-- Wally 1、Wally Plus 1、Wally 2、Wally Plus 2、Wally Mini 全部放在同一個頁面。
+- Wally 1、Wally 1 Plus、Wally 2、Wally 2 Plus、Wally Mini 全部放在同一個頁面；目前使用者確認採用 Wally 1 Plus／Wally 2 Plus 命名。
 - 不建立 Wally 型號獨立頁面或下層分支。
 - 頁面路徑：`/wally`，入口已建立，內容仍待最終確認。
 - 首頁不提供 Wally 系列專門入口；完整型號與規格保留在未來的 Wally 系列頁面。
@@ -145,8 +145,8 @@ vinext dev --hostname 0.0.0.0
 
 ### 建置狀態
 
-- 2026-08-13 已完成 `npm.cmd run build`、`npm.cmd test` 與 `npm.cmd run lint`。
-- Build 與 3 個測試通過；lint 無錯誤，但有 4 個 `<img>` 效能警告。
+- 2026-08-17 已完成 `npm.cmd run build`、`npm.cmd test` 與 `npm.cmd run lint`。
+- Build 與 4 個測試通過；lint 無錯誤，但有 1 個 `<img>` 效能警告。
 - 尚未部署到正式環境；目前只做本機預覽。
 
 ---
@@ -163,15 +163,15 @@ vinext dev --hostname 0.0.0.0
 
 ### 素材
 
-- Logo 與 Wally 產品素材已複製到 `public/brand/` 使用。
-- 已找到 6 張團隊人員照片，並完成文案稿中的人員對應。
+- Logo 與 Wally 產品素材已複製到 `public/brand/`，並接入 Wally 系列頁的產品照片展示。
+- 6 張團隊人員照片已複製到 `public/brand/team/`，並接入關於公司頁的經營／技術團隊卡片。
 
 ### 文案文件
 
 - 已建立首頁內容編輯稿。
 - 已建立其他頁面內容編輯稿。
 - 已依 `文字內容.xlsx` 補入公司、Wally 與 AGI 的既有內容。
-- 知識庫與生成式 AI 因原始資料標示「待補」，目前使用草稿並明確標示待確認。
+- 文字內容.xlsx 已提供企業知識庫與生成式 AI 的可公開文字，且已套用至對應頁面；目前待補產品截圖、案例與部署／資安說明。
 
 ---
 
@@ -240,7 +240,7 @@ vinext dev --hostname 0.0.0.0
 - `content-audit.md`：現有內容與待補資料盤點。
 - `contact-info.md`：目前聯絡資訊與呈現方式。
 - `scroll_parallax_assets_guide.md`：首頁滾動視差分鏡、素材分層、尺寸與命名規範。
-- `文字內容.xlsx`：公司簡介、團隊資料、Wally 與 AGI 初稿；知識庫與生成式 AI 為待補。
+- `文字內容.xlsx`：公司簡介、團隊資料、Wally、企業知識庫、生成式 AI 與 AGI 內容；知識庫與生成式 AI 文字已套用，仍待補產品素材。
 
 ### 本次工作區狀態
 
@@ -267,6 +267,15 @@ npm.cmd run status:update
 - `wally-2-cutout.png`
 - `wally-2-plus.png`
 - `wally-mini.png`
+- `wally/wally-2.png`
+- `wally/wally-series.png`
+- `wally/wally-2-hero.png`
+- `team/wilson-web-1.jpg`
+- `team/sunny-web-1.1.jpg`
+- `team/leff-web-1.jpg`
+- `team/lou-web-1.jpg`
+- `team/dale-web-1.jpg`
+- `team/daniel-web-1.jpg`
 
 ### 原始 Wally 素材
 
@@ -281,7 +290,7 @@ npm.cmd run status:update
 - `260424 - 形象圖 - Wally 2.png`
 - Wally 1／2／Mini／Plus 的 Logo SVG 位於 `品牌素材/logo/`
 
-注意：目前已確認有 Wally 1 Plus 的 Logo，但尚未確認對應的獨立產品照片檔。
+Wally 1 Plus 對應產品照片路徑已由 PM 檢查存在：`品牌素材/照片/wally 產品圖/Wally 1 plus.png`；尚未複製到網站公開素材路徑。
 
 ### 原始團隊照片
 
@@ -294,7 +303,7 @@ npm.cmd run status:update
 - `dale-web-1.jpg`
 - `daniel-web-1.jpg`
 
-目前團隊照片尚未複製到 `public/brand/`，也尚未在網站路由中使用。
+團隊照片已複製到 `public/brand/team/`，並在 `/about` 頁面依經營團隊與技術團隊分組使用；使用者已確認 6 張照片全部可公開。
 
 ---
 
@@ -327,29 +336,30 @@ npm.cmd run status:update
 
 ### 優先 4：素材接入
 
-- [ ] 將 6 張團隊照片複製到網站可引用的公開素材路徑。
-- [ ] 在關於公司頁面建立團隊人物卡片與 `alt` 文字。
-- [ ] 確認 Wally 1 Plus 對應產品圖。
+- [x] 將 6 張團隊照片複製到網站可引用的公開素材路徑。
+- [x] 在關於公司頁面建立團隊人物卡片與 `alt` 文字。
+- [x] 確認 Wally 1 Plus 對應產品圖（原始路徑已檢查存在；尚待接入網站公開素材）。
 - [ ] 確認各 Wally 型號正式命名、規格、尺寸、場景與差異。
-- [ ] 確認知識庫與生成式 AI 的正式產品圖片與介面截圖。
+- [x] 確認知識庫與生成式 AI 的指定產品圖片／介面截圖路徑；`知識庫情境01.png` 仍待評估是否作為情境示意圖。
 
 ### 優先 5：補齊正式內容
 
-- [ ] 關係企業名稱、簡介、Logo 與連結。
-- [ ] 團隊成員 50–100 字正式簡介與照片公開同意。
-- [ ] 知識庫頁面正式定位、特色、案例與部署方式。
-- [ ] 生成式 AI 頁面正式服務範圍與案例。
+- [x] 移除關係企業區塊，不公開關係企業名稱、簡介、Logo 與連結。
+- [x] 確認不需要團隊成員 50–100 字正式簡介；學歷／經歷可公開，6 張照片全部可公開。
+- [x] 知識庫頁面正式定位與核心特色文字。
+- [x] 生成式 AI 頁面正式服務範圍與核心特色文字。
+- [x] 知識庫與生成式 AI 指定截圖／成果圖、部署與資安目前說法已確認；知識庫情境示意圖與完整規格仍待評估／補充。
 - [ ] Wally 型號比較資料與正式規格。
-- [ ] 新聞標題、日期、摘要、來源網址與封面。
-- [ ] 活動資訊、報名網址與活動圖片。
-- [ ] YouTube、Facebook、Instagram 正式網址。
-- [ ] Google Maps、服務時間與隱私權政策。
+- [ ] 新聞區塊要製作，但新聞標題、日期、摘要、來源網址與封面仍待補。
+- [ ] 活動區塊要製作；目前只有台灣國際淨零永續展、10/14–16、攤位 M1105a，年份、地點、報名網址與圖片仍待補。
+- [ ] Instagram `https://www.instagram.com/synaiq.ai/` 已確認；YouTube、Facebook 正式網址仍待補；影音刊物暫不公開。
+- [ ] Google Maps 與服務時間暫不顯示；隱私權政策與網站分析工具仍待確認。
 
 ### 優先 6：驗證與上線
 
 - [x] `npm.cmd run build`
 - [x] `npm.cmd test`
-- [x] `npm.cmd run lint`（無錯誤，4 個 `<img>` 效能警告）
+- [x] `npm.cmd run lint`（無錯誤，1 個 `<img>` 效能警告）
 - [x] 使用本機瀏覽器驗證首頁與獨立頁面導覽。
 - [x] 驗證主要導覽路由、Email、電話與圖片載入。
 - [x] 以 `390×844` 驗證手機選單開合、四個導覽連結顯示、導頁至 `/about` 與無橫向溢出。
@@ -362,7 +372,7 @@ npm.cmd run status:update
 - 子頁 Markdown 草稿與目前頁面仍可能存在差異；標示「待補／待確認」的內容不可視為正式公開資料。
 - 不能自行補寫未確認的 Wally 規格、產品效能、團隊簡歷、新聞、社群網址或關係企業資料。
 - Wally 產品的型號名稱必須維持使用者確認的單頁產品線架構。
-- 團隊照片需確認公開使用同意；網站上線前也要確認照片授權與替代文字。
+- 團隊照片已確認可公開；網站上線前仍要保留照片來源、授權紀錄與替代文字。
 - 不要把密碼、API Key、登入資料或其他憑證寫進 Markdown、程式或 Git。
 - 不要部署或發布，除非使用者在當次對話明確授權。
 - 不要重新命名或移動現有素材；如需整理，先提供預覽清單並等待確認。
@@ -379,6 +389,36 @@ npm.cmd run status:update
 - `spreadsheets:Spreadsheets`：需要重新讀取或核對 `文字內容.xlsx` 時。
 
 ---
+
+## 9.1 使用者確認後的 UI/UX 與前端實作 brief（2026-08-17）
+
+這是依 [PROJECT_CONFIRMATION_CHECKLIST.md](PROJECT_CONFIRMATION_CHECKLIST.md) 整理的實作方向；本輪只更新文件，尚未修改 `app` 程式。
+
+### UI/UX
+
+- Wally 五個型號維持同一個 `/wally` 頁面，命名使用 Wally 1、Wally 1 Plus、Wally 2、Wally 2 Plus、Wally Mini。
+- 型號卡片要放已確認的定位／特色與對應照片；尺寸、螢幕、網路等尚未提供的欄位不可自行填寫。規格可公開，但不顯示重量與電力。
+- 經營團隊與技術團隊每人一張 card，放姓名、職稱、背景與照片；不另外做 50–100 字正式簡介。6 張照片可公開，學歷／經歷可公開。
+- 企業知識庫使用 `知識庫.png`、`企業管理系知識庫.jpg`；可用檔名標示實績截圖來源。`知識庫情境01.png` 只能先作「情境示意」候選，不可寫成已核准客戶案例。
+- 生成式 AI 使用 `媒體工廠.png` 作為成果截圖；案例維持「服飾業應用」概括說法，不新增客戶名稱或成果數字。
+- AGI 維持文字流程，暫不放案例；首頁第一區塊右側動態 Q 改為 `多多去背.png`，並可加入 Wally 1 與 Wally Mini 圖片。
+- 媒體中心保留新聞與活動區塊；影音刊物不公開。活動只使用已提供的「台灣國際淨零永續展，10/14–16，攤位 M1105a」，缺少欄位維持待補狀態。
+
+### 前端
+
+- 先接入已檢查存在的素材路徑，Wally 1 Plus 使用 `品牌素材/照片/wally 產品圖/Wally 1 plus.png`；不要把其他型號照片套到 Wally 1 Plus。
+- 首頁第一區塊以 `品牌素材/照片/AGI等示意圖/多多去背.png` 替換右側動態 Q；首頁可新增 `Wally 1.png` 與 `Wallymini.png`。
+- 企業知識庫與生成式 AI 既有公開文字維持不變；部署與資安沿用目前文字，不擴寫未確認的權限、資料保存或安全承諾。
+- 關係企業區塊移除；公司名稱使用「鑫揚智能科技股份有限公司」，英文／品牌統一使用 `SynaiQ`。
+- 聯絡頁保留已確認的電話、Email、地址；服務時間與 Google Maps 不顯示。Instagram 使用 `https://www.instagram.com/synaiq.ai/`，YouTube／Facebook 不自行猜測。
+- 目前只做本機確認／建立預覽，不部署、不發布；所有素材仍需保留來源與授權紀錄。
+
+### 剩餘阻塞
+
+- Wally 五型號完整規格與比較欄位仍不齊全。
+- 知識庫情境示意圖是否正式接入仍待評估。
+- 品牌規範實際色碼、隱私權政策與網站分析工具仍待確認。
+- 新聞與活動完整資料、YouTube／Facebook 正式網址仍待補。
 
 ## 10. 完成判定
 

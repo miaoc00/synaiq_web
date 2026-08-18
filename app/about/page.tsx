@@ -1,13 +1,27 @@
+import Image from "next/image";
 import SubpageShell from "../_components/SubpageShell";
 
 const leadership = [
-  ["Wilson Chiu", "鉅瀚綠能總經理", "國立交通大學工業工程與管理研究所"],
-  ["Sunny Kang", "鑫揚智能科技執行長", "鉅詢永續策略總經理、鑫揚智能科技營運長"],
-  ["Leef Lee", "財務長", "國立成功大學會計系、財會協理"],
-  ["Yi Shyang Lou", "總經理特助", "國立中央大學資訊管理研究所博士"],
-  ["Dale Lin", "全端暨韌體總工程師", "國立中興大學電機工程研究所"],
-  ["Daniel Shih", "專利策略師", "國立陽明交通大學科技管理研究所"],
+  { name: "Wilson Chiu", role: "鉅瀚綠能總經理", background: "國立交通大學工業工程與管理研究所", photo: "/brand/team/wilson-web-1.jpg", alt: "Wilson Chiu 個人照片" },
+  { name: "Sunny Kang", role: "鑫揚智能科技執行長", background: "鉅詢永續策略總經理、鑫揚智能科技營運長", photo: "/brand/team/sunny-web-1.1.jpg", alt: "Sunny Kang 個人照片" },
+  { name: "Leef Lee", role: "財務長", background: "國立成功大學會計系、財會協理", photo: "/brand/team/leff-web-1.jpg", alt: "Leef Lee 個人照片" },
 ];
+
+const technical = [
+  { name: "Yi Shyang Lou", role: "總經理特助", background: "國立中央大學資訊管理研究所博士", photo: "/brand/team/lou-web-1.jpg", alt: "Yi Shyang Lou 個人照片" },
+  { name: "Dale Lin", role: "全端暨韌體總工程師", background: "國立中興大學電機工程研究所", photo: "/brand/team/dale-web-1.jpg", alt: "Dale Lin 個人照片" },
+  { name: "Daniel Shih", role: "專利策略師", background: "國立陽明交通大學科技管理研究所", photo: "/brand/team/daniel-web-1.jpg", alt: "Daniel Shih 個人照片" },
+];
+
+function TeamGroup({ eyebrow, title, members }: { eyebrow: string; title: string; members: typeof leadership }) {
+  return (
+    <div className="team-group">
+      <div className="eyebrow">{eyebrow}</div>
+      <h3 className="team-group-title">{title}</h3>
+      <div className="team-grid">{members.map((member) => <article className="team-card" key={member.name}><div className="team-photo"><Image src={member.photo} alt={member.alt} fill sizes="(max-width: 560px) 100vw, (max-width: 900px) 50vw, 33vw" /></div><h3 className="team-card-name">{member.name}</h3><span>{member.role}</span><p>{member.background}</p></article>)}</div>
+    </div>
+  );
+}
 
 export default function AboutPage() {
   return (
@@ -23,7 +37,8 @@ export default function AboutPage() {
       </section>
       <section className="subpage-section">
         <div className="eyebrow">TEAM</div><h2>經營團隊與技術團隊</h2>
-        <div className="team-grid">{leadership.map(([name, role, background]) => <article className="team-card" key={name}><strong>{name}</strong><span>{role}</span><p>{background}</p></article>)}</div>
+        <TeamGroup eyebrow="LEADERSHIP TEAM" title="經營團隊" members={leadership} />
+        <TeamGroup eyebrow="TECHNICAL TEAM" title="技術團隊" members={technical} />
       </section>
       <section className="subpage-section subpage-two-column">
         <div><div className="eyebrow">VISION</div><h2>讓 AI 真正融入企業的日常運作。</h2></div>
