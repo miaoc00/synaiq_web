@@ -1,5 +1,7 @@
 # SynaiQ Web UI/UX 實作規格
 
+> 2026-08-18 最新使用者指示：首頁第一區右側主視覺改用 `品牌素材\logo\synaiq logo s.svg` 的網站最佳化副本；本指示取代本文件第 2 節原訂的「多多去背」首頁第一區配置。第五區的數位人與 Wally 互動視覺維持不變。
+
 > 版本：2026-08-17
 >
 > 目的：把 PM 已確認的資料轉成前端可直接實作的介面規格。
@@ -508,3 +510,51 @@ PM 已確認要製作新聞區塊，但新聞的標題、日期、摘要、來�
 8. 以桌機、平板、手機、reduced-motion、keyboard 做驗收，再執行 build／test／lint。
 
 本 brief 完成後，前端仍不可自行補上尚未確認的規格、案例、年份、地點、網址或資安承諾；需要新資料時回到 `PROJECT_CONFIRMATION_CHECKLIST.md` 由 PM 更新。
+
+## 10. 首頁「企業知識中樞」強化實作（2026-08-19）
+
+本節記錄使用者確認後已完成的首頁 P1 改善；不取代本文件其餘頁面的既有規格。
+
+### 已核准設計方向
+
+- Creative North Star：`企業知識中樞`。
+- 視覺採高科技展示型元件、3D 玻璃層次與節制光暈；不加入額外動畫框架。
+- 品牌 Medium 字體使用使用者提供的 `public/fonts/NotoSansCJKtc-Medium.otf`；CSS 以 `SynaiQ Noto Sans CJK TC` 註冊為 500 weight，並保留 Source Han Sans TC 與系統中文字型作載入失敗 fallback。
+
+### 已完成項目
+
+- 「品牌產品」場景改為四個可鍵盤操作的正式入口：企業知識庫、生成式 AI、AGI、Wally 系列；描述沿用既有核准產品文案，不新增產品事實。
+- 「產品畫面」場景接入 `public/brand/knowledge-base.png` 與 `public/brand/media-factory.png`，分別標示為企業知識庫介面與生成式 AI 成果畫面；Wally 1、Wally Mini 僅作產品線輔助視覺。
+- 桌機章節導覽顯示完整中文標籤與當前狀態，並預留右側安全距離；手機維持自然直向閱讀且隱藏固定章節導覽。
+- 首頁「了解 SynaiQ」連至 `/about`；場景跳轉於操作當下重新判斷桌機模式，避免初次載入狀態競爭。
+- 補強 product entry、evidence frame、focus-visible、custom scrollbar 與 reduced-motion 樣式。
+- 以 `@font-face` 接入品牌 Medium 字型並使用 `font-display: swap`；原始 OTF 為 16,508,576 bytes，後續可在不改變字型外觀的前提下評估 WOFF2 最佳化。
+
+### 本次即時驗證
+
+- `npm.cmd test`：build 完成，9 個主要路由產出，5/5 測試通過；包含品牌 Medium 字型檔、路徑、weight 與 `font-display` 回歸檢查。
+- `npm.cmd run lint`：通過，無輸出警告。
+- 本機瀏覽器：1440×900 的章節導覽可切換至「品牌產品」，產品入口可導向 `/knowledge-base`；390×844 無水平溢出，產品入口與證據畫面維持直向可讀。
+- 本機瀏覽器字型檢查：1440×900 與 390×844 均回報 `SynaiQ Noto Sans CJK TC` 500 已載入；兩個 viewport 皆無水平溢出。
+- 尚未 commit、push 或部署。
+
+## 11. 產品總覽頁精修（2026-08-19）
+
+本節只涵蓋既有 `/products` 頁，不新增價格方案、產品規格或新路由。
+
+### 已完成項目
+
+- 四個產品入口依品牌主定位排列為企業知識庫、生成式 AI、AGI、Wally 系列；既有文案與目的路由保持不變。
+- 桌機由 3＋1 不平衡排列調整為 2×2，640px 以下切換單欄；卡片改為整張原生連結，提供至少 44px 的行動區與可見 `focus-visible`。
+- 產品頁主標、卡片標題與 CTA 改用已接入的品牌 Medium 字體；移除此頁沒有資訊作用的 hero／CTA eyebrow。
+- 產品卡使用 14px 圓角、低透明深色表面與細邊界；hover 只提高位置、邊界與表面明度，不增加未定義產品動畫。
+- `SubpageShell` 新增選用的 `pageClassName`、hero eyebrow 與 CTA eyebrow 控制；其他子頁未傳入時維持既有輸出。
+
+### 本次即時驗證
+
+- `npm.cmd test`：build 完成，6/6 測試通過；新增產品順序、四條路由、整卡連結、2×2 grid 與品牌字體回歸檢查。
+- `npm.cmd run lint`：通過，無錯誤或警告。
+- 本機瀏覽器 1440×900：四張卡為 2×2，主標無單字孤行，品牌 Medium 字體已載入，無水平溢出。
+- 本機瀏覽器 390×844：四張卡為單欄、319px 寬，無水平溢出；DOM 顯示四個具正式 `href` 的產品入口，實際點擊企業知識庫可進入 `/knowledge-base`。
+- 瀏覽器自動化環境未能驅動 Tab 焦點移動；原生 `<a>` 語意與 `focus-visible` CSS 已確認，但實體鍵盤 Tab／Enter 走查仍需人工補驗。
+- 尚未 commit、push 或部署。

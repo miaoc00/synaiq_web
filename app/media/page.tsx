@@ -1,6 +1,12 @@
+import type { Metadata } from "next";
 import ContentStatus from "../_components/ContentStatus";
 import EmptyState from "../_components/EmptyState";
 import SubpageShell from "../_components/SubpageShell";
+
+export const metadata: Metadata = {
+  title: "媒體中心",
+  description: "查看 SynaiQ 已確認的活動與社群入口；新聞資料確認後再逐項公開。",
+};
 
 export default function MediaPage() {
   return (
@@ -8,12 +14,19 @@ export default function MediaPage() {
       eyebrow="MEDIA CENTER"
       title="掌握 SynaiQ 最新消息與應用動態。"
       description="媒體中心將收錄新聞、活動與社群內容；正式資料確認後再逐項公開。"
-      action={{ href: "/contact", label: "聯絡我們" }}
+      pageClassName="media-page"
+      action={{
+        href: "/contact",
+        label: "聯絡 SynaiQ",
+        eyebrow: "MEDIA & PARTNERSHIPS",
+        title: "想了解活動或合作資訊？",
+        description: "目前未公開的新聞與活動欄位，會在資料確認後更新；其他詢問歡迎直接聯絡我們。",
+      }}
     >
       <section className="subpage-section media-section" aria-labelledby="news-heading">
         <div className="eyebrow">NEWS</div>
         <h2 id="news-heading">新聞集錦</h2>
-        <EmptyState title="新聞內容整理中" description="新聞資料確認後將陸續更新。" />
+        <EmptyState title="目前沒有可公開的新聞" description="新聞標題、日期與來源確認後，才會在這裡逐項更新。" action={{ href: "/contact", label: "聯絡 SynaiQ" }} />
       </section>
 
       <section className="subpage-section media-section" aria-labelledby="events-heading">

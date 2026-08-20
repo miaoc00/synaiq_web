@@ -3,30 +3,42 @@ import Image from "next/image";
 import SiteHeader from "./SiteHeader";
 
 type SubpageShellProps = {
-  eyebrow: string;
+  eyebrow?: string;
   title: string;
   description: string;
   children: ReactNode;
-  action?: { href: string; label: string };
+  heroVisual?: ReactNode;
+  action?: {
+    href: string;
+    label: string;
+    eyebrow?: string | null;
+    title?: string;
+    description?: string;
+  };
+  pageClassName?: string;
 };
 
-export default function SubpageShell({ eyebrow, title, description, children, action }: SubpageShellProps) {
+export default function SubpageShell({ eyebrow, title, description, children, heroVisual, action, pageClassName }: SubpageShellProps) {
   return (
     <>
       <SiteHeader />
-      <main id="main-content" className="subpage" tabIndex={-1}>
+      <main id="main-content" className={`subpage${pageClassName ? ` ${pageClassName}` : ""}`} tabIndex={-1}>
         <div className="subpage-main">
-          <section className="subpage-hero">
-            <div className="eyebrow">{eyebrow}</div>
-            <h1>{title}</h1>
-            <p>{description}</p>
+          <section className={`subpage-hero${heroVisual ? " subpage-hero-with-visual" : ""}`}>
+            <div className="subpage-hero-copy">
+              {eyebrow ? <div className="eyebrow">{eyebrow}</div> : null}
+              <h1>{title}</h1>
+              <p>{description}</p>
+            </div>
+            {heroVisual ? <div className="subpage-hero-visual">{heroVisual}</div> : null}
           </section>
           {children}
           {action ? (
             <section className="subpage-cta">
               <div>
-                <div className="eyebrow">LET&apos;S BUILD WHAT&apos;S NEXT</div>
-                <h2>從一個明確場景，開始下一步。</h2>
+                {action.eyebrow !== null ? <div className="eyebrow">{action.eyebrow ?? "LET'S BUILD WHAT'S NEXT"}</div> : null}
+                <h2>{action.title ?? "從一個明確場景，開始下一步。"}</h2>
+                {action.description ? <p className="subpage-cta-description">{action.description}</p> : null}
               </div>
               <a className="primary-button" href={action.href}>{action.label}</a>
             </section>

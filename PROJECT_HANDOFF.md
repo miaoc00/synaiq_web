@@ -147,6 +147,9 @@ vinext dev --hostname 0.0.0.0
 
 - 2026-08-17 已完成 `npm.cmd run build`、`npm.cmd test` 與 `npm.cmd run lint`。
 - Build 與 4 個測試通過；lint 無錯誤，但有 1 個 `<img>` 效能警告。
+- 2026-08-18 已改善桌機首頁 GSAP 滾動：故事軌道由 `720vh` 縮短為 `340vh`、scrub 由 `0.65` 調整為 `0.35`，加入依場景落點的 directional snap，並移除已不存在 `.cta-ring` 的失效 tween；手機版仍維持自然直向閱讀。
+- 2026-08-18 依最新使用者指示，首頁第一區右側人物圖已改為 `synaiq logo s.svg` 的網站最佳化副本 `public/brand/synaiq-logo-s.webp`；第五區的數位人多多與 Wally 互動視覺維持不變。
+- 2026-08-18 本輪 `npm.cmd test`（含 build 與 4 個測試）、`npm.cmd run lint`、`git diff --check` 均通過；瀏覽器確認 1440×900 與 1024×768 可用單次 360px 滾動逐幕切換，390×844 無水平溢出。
 - 尚未部署到正式環境；目前只做本機預覽。
 
 ---
@@ -431,3 +434,60 @@ Wally 1 Plus 對應產品照片路徑已由 PM 檢查存在：`品牌素材/照�
 5. 待補內容已由使用者提供或明確標示為不公開／暫不呈現。
 6. 桌機、手機、鍵盤操作、圖片載入與主要連結均驗證通過。
 7. 使用者明確同意後才進行部署。
+
+---
+
+## 11. 2026-08-19 首頁企業知識中樞改善
+
+### 本次範圍與決策
+
+- 使用者核准首頁三項 P1：建立可探索的產品入口、以既有真實素材呈現產品證據、讓桌機章節導覽標籤可見。
+- Creative North Star 為「企業知識中樞」；視覺方向為高科技展示元件、3D 玻璃層次與節制光暈。
+- 品牌字體指定為 Medium；使用者已提供 `NotoSansCJKtc-Medium.otf`，網站以 `SynaiQ Noto Sans CJK TC` 名稱註冊為 500 weight，並保留 Source Han Sans TC 與系統中文字型 fallback。
+
+### 已完成實作
+
+- `app/page.tsx`：品牌產品改為四個正式路由入口；產品畫面接入企業知識庫與生成式 AI 的已確認素材；「了解 SynaiQ」修正連至 `/about`；改善場景跳轉的媒體查詢時機。
+- `app/globals.css`：新增品牌字型契約、產品入口與證據畫面層次、可見 focus、桌機章節標籤、安全距離、手機排列與 reduced-motion 規則。
+- `tests/rendered-html.test.mjs`：加入產品路由、證據素材與章節標籤的回歸斷言。
+- `public/fonts/NotoSansCJKtc-Medium.otf`：由使用者指定的內網來源複製，16,508,576 bytes；來源與專案副本 SHA-256 均為 `07AAF9190313301B18BDA707C4DB7AC75EAAE6EF222EB5C38F97ED78700FD4F2`。
+- 設計依據記錄於 `PRODUCT.md`、`DESIGN.md`、`.impeccable/design.json` 與 `.impeccable/critique/2026-08-19T02-48-27Z__app-page-tsx.md`。
+
+### 本次即時證據
+
+- `npm.cmd test`：build 完成，5/5 測試通過；新增品牌 Medium 字型回歸測試。
+- `npm.cmd run lint`：exit code 0，無輸出警告。
+- 本機瀏覽器 1440×900：章節導覽可切至「品牌產品」，產品入口可導向 `/knowledge-base`。
+- 本機瀏覽器 390×844：無水平溢出，產品入口與證據畫面採直向排列。
+- 本機瀏覽器字型檢查：1440×900 與 390×844 均確認 `SynaiQ Noto Sans CJK TC` 500 載入，且頁面沒有水平溢出。
+- `npm.cmd run status`：唯讀盤點仍偵測到 71 個全專案待補／待確認標記；不屬於本次首頁 P1 的自動補寫範圍。
+
+### 尚未執行與下一步
+
+- 未 commit、push 或部署。
+- 目前 OTF 為 16.5 MB；已用 `font-display: swap` 避免阻塞文字顯示。若要降低首次下載量，可另行製作並驗證 WOFF2，但不得在未確認授權與字形覆蓋前任意裁切字元。
+- 其他頁面的待補資料與 Wally 完整規格仍依 `PROJECT_CONFIRMATION_CHECKLIST.md` 處理，不從首頁推測補齊。
+
+---
+
+## 12. 2026-08-19 `/products` 產品總覽頁精修
+
+### 已完成實作
+
+- `app/products/page.tsx`：產品順序改為企業知識庫、生成式 AI、AGI、Wally；四張產品卡改為完整原生連結並保留既有文字與目的路由。
+- `app/_components/SubpageShell.tsx`：加入選用頁面 class 與 eyebrow 顯示控制，讓產品頁可移除無資訊作用的 kicker，不影響其他子頁預設輸出。
+- `app/globals.css`：產品頁桌機採 2×2、手機採單欄；統一品牌 Medium 字體、14px 卡片圓角、hover、focus-visible、44px 行動區與 reduced-motion。
+- `tests/rendered-html.test.mjs`：加入產品順序、路由、整卡連結、grid 與品牌字體回歸測試。
+
+### 本次即時證據
+
+- `npm.cmd test`：build 完成，6/6 測試通過。
+- `npm.cmd run lint`：exit code 0，無錯誤或警告。
+- 1440×900：四張產品卡 2×2、主標完整平衡、品牌字體已載入、無水平溢出。
+- 390×844：四張產品卡單欄、無水平溢出；四個原生連結皆在互動 DOM 中，企業知識庫入口實際導向 `/knowledge-base`。
+- 自動化環境未能直接移動 Tab 焦點；原生 anchor 與 `focus-visible` 已確認，實體鍵盤 Tab／Enter 尚待人工補驗。
+
+### 範圍邊界
+
+- 未新增 `/pricing`、價格、方案等級、比較表或產品事實。
+- 未 commit、push 或部署。

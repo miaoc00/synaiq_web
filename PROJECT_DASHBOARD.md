@@ -18,6 +18,35 @@ npm.cmd run status:update
 
 `status` 會回報 Git 工作區、最近 commit、主要路由、文案待補標記與歷史驗證紀錄。它不會修改網站、不會 commit、push 或部署。
 
+## 固定代理人配置
+
+子代理只在目前 session／thread 存活；角色規則與進度則保存在專案文件中。新 session 開始時，先使用 `$synaiq-project-team` 讀取本看板，再依工作需要重新建立角色。
+
+| 角色 | 主要責任 | 必讀輸入 | 固定交付物 |
+| --- | --- | --- | --- |
+| PM | 確認範圍、資料狀態、優先順序與驗收條件 | 本看板、交接摘要、確認清單、兩份文案 MD | 任務摘要、資料邊界、阻塞事項、交給 UI/UX 的驗收條件 |
+| UI/UX | 把已確認內容轉成版面、互動、responsive 與 accessibility 規格 | PM 交付、現有 route、全站 CSS、UIUX brief | 畫面規格、內容層級、狀態設計、交給 Frontend 的實作清單 |
+| Frontend | 依核准規格實作並完成技術與瀏覽器驗證 | PM／UIUX 交付、相關程式、素材 mapping | 程式變更、測試結果、未驗證事項、回交 PM 的完成報告 |
+
+### 固定交接流程
+
+```text
+使用者需求
+  → PM：確認資料與完成定義
+  → UI/UX：形成可實作規格
+  → Frontend：實作與驗證
+  → PM：核對驗收條件並更新看板
+```
+
+每次交接都要寫明：`狀態｜已完成｜證據｜阻塞｜下一位負責人｜需要使用者確認`。報告工作不得自動變成修改、commit、push 或部署。
+
+## 可重複使用的專案 Skill
+
+- 路徑：`.agents/skills/synaiq-project-team/SKILL.md`
+- 呼叫方式：`$synaiq-project-team`
+- 用途：新 session 快速恢復 PM、UI/UX、Frontend 的工作順序、資料邊界、交接格式與驗證要求。
+- Skill 不保存執行中的代理人；實際進度仍以本看板與專案檔案為準。
+
 ## Agent 回報提示詞
 
 可以直接對 Agent 說：
@@ -37,12 +66,12 @@ npm.cmd run status:update
 <!-- STATUS:START -->
 ### Agent 即時回報
 
-> 產生時間：2026-08-17 16:56（Asia/Taipei）
+> 產生時間：2026-08-18 11:33（Asia/Taipei）
 
 | 檢查項目 | 狀態 | 證據 |
 | --- | --- | --- |
-| Git 工作區 | 有 29 筆未提交變更 | branch: `codex/dev` |
-| 最近 commit | 已讀取 | `e9e0354 2026-08-14 feat: build SynaiQ multi-page site` |
+| Git 工作區 | 有 4 筆未提交變更 | branch: `codex/dev` |
+| 最近 commit | 已讀取 | `1069b7d 2026-08-18 feat: checkpoint SynaiQ website updates` |
 | 主要路由 | 已建立 | 9 個主要路由檔案皆存在（即時檢查） |
 | 子頁文案 | 等待使用者 | 偵測到 71 個待補／待確認標記（文案仍需人工確認） |
 | Build／Test／Lint | 歷史紀錄 | 交接紀錄顯示 2026-08-17 曾通過；Reporter 不會自行執行驗證指令 |

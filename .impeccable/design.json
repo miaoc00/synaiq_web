@@ -1,0 +1,95 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-08-19T05:10:00Z",
+  "title": "Design System: SynaiQ",
+  "extensions": {
+    "colorMeta": {
+      "ink": { "role": "neutral", "displayName": "Ink", "canonical": "#120725", "tonalRamp": ["#090313", "#120725", "#1d0a32", "#2e1545", "#4f176d", "#8151a3", "#c498ee", "#f5effa"] },
+      "purple": { "role": "primary", "displayName": "Purple", "canonical": "#612271", "tonalRamp": ["#1a071f", "#2d0d35", "#461653", "#612271", "#814394", "#a46fba", "#cba6d6", "#f4e8f5"] },
+      "violet": { "role": "secondary", "displayName": "Violet", "canonical": "#8b5fd3", "tonalRamp": ["#1b102f", "#2e1b50", "#482d78", "#6644a1", "#8b5fd3", "#aa86e4", "#ceb8f1", "#f2ebfb"] },
+      "lavender": { "role": "secondary", "displayName": "Lavender", "canonical": "#c498ee", "tonalRamp": ["#24152f", "#3d2451", "#5c3977", "#7e529c", "#a674c7", "#c498ee", "#dec2f6", "#f7edfd"] },
+      "gold": { "role": "primary", "displayName": "Gold", "canonical": "#d0ae68", "tonalRamp": ["#2a210e", "#493a19", "#6b5528", "#90723b", "#b18f51", "#d0ae68", "#e4cc98", "#f8efd9"] },
+      "paper": { "role": "neutral", "displayName": "Paper", "canonical": "#f5f1ea", "tonalRamp": ["#211f1b", "#3f3b34", "#615b50", "#857d70", "#aaa296", "#cec8be", "#e8e3dc", "#f5f1ea"] },
+      "white": { "role": "neutral", "displayName": "White", "canonical": "#ffffff", "tonalRamp": ["#262626", "#454545", "#666666", "#888888", "#aaaaaa", "#cccccc", "#e8e8e8", "#ffffff"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "思源黑體 Medium；每幕唯一主張。" },
+      "body": { "displayName": "Body", "purpose": "思源黑體 Medium；企業說明與產品證據。" },
+      "label": { "displayName": "Label", "purpose": "思源黑體 Medium；章節、狀態與技術分類。" }
+    },
+    "shadows": [
+      { "name": "cta-lift", "value": "0 12px 32px rgba(0,0,0,.22)", "purpose": "主要 CTA 的靜止景深。" },
+      { "name": "cta-lift-hover", "value": "0 16px 38px rgba(0,0,0,.28)", "purpose": "主要 CTA hover／focus 的提高狀態。" },
+      { "name": "glass-float", "value": "0 22px 70px rgba(0,0,0,.25)", "purpose": "玻璃卡與證據層的長距離柔影。" },
+      { "name": "knowledge-glow", "value": "0 0 85px rgba(196,152,238,.32)", "purpose": "知識核心的低透明紫色發光。" },
+      { "name": "product-grounding", "value": "0 32px 30px rgba(0,0,0,.42)", "purpose": "去背產品與數位人的落地陰影。" }
+    ],
+    "motion": [
+      { "name": "state-fast", "value": "250ms ease", "purpose": "連結、按鈕、邊框與選單狀態。" },
+      { "name": "scene-transition", "value": "650ms ease", "purpose": "桌機章節淡入與位移。" },
+      { "name": "orbit-slow", "value": "18s linear infinite", "purpose": "低注意力的知識軌道。" },
+      { "name": "pulse-ambient", "value": "6s ease-in-out infinite", "purpose": "主要焦點背景的柔和呼吸。" }
+    ],
+    "breakpoints": [
+      { "name": "compact", "value": "560px" },
+      { "name": "mobile", "value": "767px" },
+      { "name": "tablet", "value": "900px" },
+      { "name": "desktop", "value": "1200px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary CTA",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "首頁與子頁唯一主要行動。",
+      "html": "<a class=\"ds-primary-cta\" href=\"#\">討論導入需求</a>",
+      "css": ".ds-primary-cta{display:inline-flex;min-height:50px;align-items:center;justify-content:center;padding:0 24px;border-radius:999px;background:var(--gold,#d0ae68);color:var(--ink,#120725);font-family:'SynaiQ Noto Sans CJK TC','Source Han Sans TC','Noto Sans TC',sans-serif;font-size:14px;font-weight:500;text-decoration:none;box-shadow:0 12px 32px rgba(0,0,0,.22);transition:transform .25s,background .25s,box-shadow .25s}.ds-primary-cta:hover{transform:translateY(-2px);background:#dfc17f;box-shadow:0 16px 38px rgba(0,0,0,.28)}.ds-primary-cta:focus-visible{outline:2px solid var(--gold,#d0ae68);outline-offset:4px}"
+    },
+    {
+      "name": "Navigation CTA",
+      "kind": "nav",
+      "refersTo": "button-ghost",
+      "description": "頂部導覽的聯絡入口。",
+      "html": "<a class=\"ds-nav-cta\" href=\"#\">聯絡我們</a>",
+      "css": ".ds-nav-cta{display:inline-flex;min-height:44px;align-items:center;padding:11px 18px;border:1px solid rgba(255,255,255,.32);border-radius:999px;color:#fff;font-family:'SynaiQ Noto Sans CJK TC','Source Han Sans TC','Noto Sans TC',sans-serif;font-size:13px;letter-spacing:.08em;text-decoration:none;transition:border-color .25s,color .25s,box-shadow .25s}.ds-nav-cta:hover{border-color:var(--gold,#d0ae68);color:var(--gold,#d0ae68);box-shadow:0 0 22px rgba(208,174,104,.16)}.ds-nav-cta:focus-visible{outline:2px solid var(--gold,#d0ae68);outline-offset:4px}"
+    },
+    {
+      "name": "Product Entry",
+      "kind": "card",
+      "refersTo": null,
+      "description": "將產品名稱直接連到對應證據頁。",
+      "html": "<a class=\"ds-product-entry\" href=\"#\"><span>PRODUCT</span><strong>企業知識庫</strong><i>了解產品 →</i></a>",
+      "css": ".ds-product-entry{display:grid;gap:12px;padding:24px;border:1px solid rgba(255,255,255,.18);border-radius:14px;background:linear-gradient(145deg,rgba(255,255,255,.10),rgba(255,255,255,.025));color:#fff;text-decoration:none;box-shadow:0 22px 70px rgba(0,0,0,.18);backdrop-filter:blur(12px);transition:transform .25s,border-color .25s,box-shadow .25s}.ds-product-entry span{color:var(--gold,#d0ae68);font-size:11px;letter-spacing:.18em}.ds-product-entry strong{font-family:'SynaiQ Noto Sans CJK TC','Source Han Sans TC','Noto Sans TC',sans-serif;font-size:24px;font-weight:500}.ds-product-entry i{color:rgba(255,255,255,.7);font-size:13px;font-style:normal}.ds-product-entry:hover{transform:translateY(-4px);border-color:rgba(208,174,104,.7);box-shadow:0 26px 80px rgba(97,34,113,.38)}.ds-product-entry:focus-visible{outline:2px solid var(--gold,#d0ae68);outline-offset:4px}"
+    },
+    {
+      "name": "Evidence Stage",
+      "kind": "custom",
+      "refersTo": null,
+      "description": "以主畫面和 caption 呈現已確認產品證據。",
+      "html": "<figure class=\"ds-evidence\"><div class=\"ds-evidence-canvas\">PRODUCT UI</div><figcaption>企業知識庫介面</figcaption></figure>",
+      "css": ".ds-evidence{margin:0;padding:12px;border:1px solid rgba(196,152,238,.34);border-radius:14px;background:rgba(18,7,37,.72);box-shadow:0 24px 80px rgba(0,0,0,.34),0 0 55px rgba(139,95,211,.18);backdrop-filter:blur(14px)}.ds-evidence-canvas{display:grid;min-height:180px;place-items:center;border-radius:8px;background:var(--paper,#f5f1ea);color:var(--ink,#120725);font-family:'SynaiQ Noto Sans CJK TC','Source Han Sans TC','Noto Sans TC',sans-serif;font-weight:500}.ds-evidence figcaption{padding:14px 4px 2px;color:rgba(255,255,255,.72);font-family:'SynaiQ Noto Sans CJK TC','Source Han Sans TC','Noto Sans TC',sans-serif;font-size:12px}"
+    },
+    {
+      "name": "Chapter Index",
+      "kind": "nav",
+      "refersTo": null,
+      "description": "桌機首頁可辨識的章節跳轉與目前狀態。",
+      "html": "<nav class=\"ds-chapters\"><a class=\"is-active\" href=\"#\">01 品牌介紹</a><a href=\"#\">02 服務</a><a href=\"#\">03 產品</a></nav>",
+      "css": ".ds-chapters{display:grid;gap:6px;padding:10px;border:1px solid rgba(255,255,255,.14);border-radius:14px;background:rgba(18,7,37,.72);backdrop-filter:blur(12px)}.ds-chapters a{display:flex;min-height:44px;align-items:center;padding:0 14px;border-radius:999px;color:rgba(255,255,255,.55);font-family:'SynaiQ Noto Sans CJK TC','Source Han Sans TC','Noto Sans TC',sans-serif;font-size:12px;text-decoration:none;transition:color .25s,background .25s,box-shadow .25s}.ds-chapters a:hover,.ds-chapters a.is-active{background:rgba(97,34,113,.5);color:#fff;box-shadow:inset 0 0 0 1px rgba(196,152,238,.25)}.ds-chapters a.is-active:before{content:'';width:6px;height:6px;margin-right:9px;border-radius:50%;background:var(--gold,#d0ae68);box-shadow:0 0 14px var(--gold,#d0ae68)}.ds-chapters a:focus-visible{outline:2px solid var(--gold,#d0ae68);outline-offset:2px}"
+    }
+  ],
+  "narrative": {
+    "northStar": "企業知識中樞",
+    "overview": "SynaiQ 的介面是一個可被看見、理解並操作的企業知識中樞。高科技感來自精準的空間、光線與互動；產品介面與已確認成果是視覺證據，抽象光網只負責說明連結。",
+    "keyCharacteristics": ["深色企業資料空間與紫色知識層次", "金色作為決策、焦點與可操作訊號", "玻璃、景深、柔光與軌道形成高科技展示感", "真實產品介面優先於通用 AI 抽象圖形", "思源黑體 Medium 統一中文品牌聲音"],
+    "rules": [
+      { "name": "The Signal Rule", "body": "Gold 必須保持稀少；同一畫面只指向一個主要決策或目前狀態。", "section": "colors" },
+      { "name": "The One Typeface Rule", "body": "中文品牌畫面統一使用思源黑體 Medium；層級用尺度、字距與明暗建立。", "section": "typography" },
+      { "name": "The Scan Before Story Rule", "body": "故事可以逐幕展開，但章節名稱與產品入口必須先可被辨識。", "section": "layout" },
+      { "name": "The Directed Light Rule", "body": "每一幕只允許一個主要光源與一個焦點發光。", "section": "elevation" }
+    ],
+    "dos": ["Do 讓已確認的產品介面、流程與產品素材成為每幕主要證據。", "Do 使用玻璃、景深與發光強化空間關係和互動狀態。", "Do 讓章節名稱、產品入口與 CTA 在鍵盤和觸控環境中清楚可探索。"],
+    "donts": ["Don't 用通用 AI 球體、節點或光線取代可驗證產品內容。", "Don't 讓所有元件同時發光、浮起或播放動畫。", "Don't 以視覺效果遮蔽文字、caption、focus ring 或產品截圖。"]
+  }
+}

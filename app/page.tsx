@@ -18,17 +18,25 @@ const serviceItems = [
   "AGI 與 AI Agent 開發",
   "系統與場域整合",
 ];
-const productItems = ["企業知識庫", "生成式 AI 服務", "AGI", "Wally 系列"];
-const abilities = [
-  ["RAG", "精準檢索", "從企業知識中找出可信脈絡"],
-  ["REASON", "推理生成", "結合事實資料與模型推理"],
-  ["MCP", "系統串接", "連接外部工具與企業既有系統"],
-  ["AGENT", "代理執行", "拆解任務並完成跨系統工作"],
+const productItems = [
+  { name: "企業知識庫", description: "將分散文件與資料整理成可搜尋、可追溯、可持續更新的企業知識網絡。", href: "/knowledge-base" },
+  { name: "生成式 AI 服務", description: "運用企業資料與情境脈絡，協助內容生成、資訊整理與決策支援。", href: "/generative-ai" },
+  { name: "AGI", description: "整合知識、推理、工具串接與代理執行，形成企業專屬的人工智慧整合框架。", href: "/agi" },
+  { name: "Wally 系列", description: "整合數位人物、企業知識與互動載具，提供多語言、跨系統的 AI 互動服務。", href: "/wally" },
 ];
-const experienceItems = ["數位人多多", "Wally 1", "Wally Mini"];
+const abilities = [
+  ["RAG", "先找資料再回答", "先從企業文件找出相關內容，再生成回覆。"],
+  ["REASON", "整理資訊與推理", "把已知資料和模型推理放在同一個工作流程。"],
+  ["MCP", "接上既有工具", "用模型上下文協定（MCP）連接企業系統與外部工具。"],
+  ["AGENT", "交給 AI 執行", "讓 AI Agent 依照授權拆解步驟並完成工作。"],
+];
+const evidenceItems = ["企業知識庫介面", "生成式 AI 成果", "Wally 場域延伸"];
 
 const scrollBehavior = (): ScrollBehavior =>
   window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth";
+
+const settledSceneProgress = (scene: number, sceneCount: number) =>
+  scene === 0 ? 0.01 : Math.min(0.999, (scene + 0.38) / sceneCount);
 
 export default function Home() {
   const storyRef = useRef<HTMLElement>(null);
@@ -92,7 +100,15 @@ export default function Home() {
         trigger: story,
         start: "top top",
         end: "bottom bottom",
-        scrub: 0.65,
+        scrub: 0.35,
+        snap: {
+          snapTo: scenes.map((_, scene) => settledSceneProgress(scene, scenes.length)),
+          duration: { min: 0.18, max: 0.38 },
+          delay: 0.06,
+          ease: "power2.out",
+          directional: true,
+          inertia: false,
+        },
         invalidateOnRefresh: true,
         onUpdate: (self) => updateStoryState(self.progress),
       },
@@ -145,8 +161,9 @@ export default function Home() {
       duration: 0.42,
       ease: "power3.out",
     }, 0.82);
-    timeline.fromTo(".knowledge-network .node", { autoAlpha: 0, scale: 0.72 }, {
+    timeline.fromTo(".product-entry", { autoAlpha: 0, y: 22, scale: 0.97 }, {
       autoAlpha: 1,
+      y: 0,
       scale: 1,
       stagger: 0.045,
       duration: 0.32,
@@ -159,10 +176,11 @@ export default function Home() {
       duration: 0.34,
       ease: "power3.out",
     }, 2.82);
-    timeline.fromTo(".experience-main-visual", { autoAlpha: 0, yPercent: 14, scale: 0.94 }, {
+    timeline.fromTo(".evidence-frame", { autoAlpha: 0, yPercent: 10, scale: 0.96 }, {
       autoAlpha: 1,
       yPercent: 0,
       scale: 1,
+      stagger: 0.08,
       duration: 0.48,
       ease: "power3.out",
     }, 3.78);
@@ -172,23 +190,17 @@ export default function Home() {
       duration: 0.55,
       ease: "power2.out",
     }, 3.72);
-    timeline.fromTo(".cta-ring", { autoAlpha: 0, scale: 0.88 }, {
-      autoAlpha: 1,
-      scale: 1,
-      duration: 0.54,
-      ease: "power3.out",
-    }, 4.78);
-
     updateStoryState(timeline.scrollTrigger?.progress ?? 0);
     return () => story.classList.remove("has-gsap-motion");
   }, { scope: storyRef, dependencies: [isDesktopStory], revertOnUpdate: true });
 
   const jump = (scene: number) => {
     const story = storyRef.current;
-    if (!isDesktopStory) {
+    const desktopStory = window.matchMedia("(min-width: 901px)").matches;
+    if (!desktopStory) {
       document.getElementById(sceneIds[scene])?.scrollIntoView({ behavior: scrollBehavior() });
     } else if (story) {
-      const settledProgress = scene === 0 ? 0.01 : Math.min(0.999, (scene + 0.38) / sceneIds.length);
+      const settledProgress = settledSceneProgress(scene, sceneIds.length);
       window.scrollTo({
         top: story.offsetTop + (story.offsetHeight - window.innerHeight) * settledProgress,
         behavior: scrollBehavior(),
@@ -213,6 +225,9 @@ export default function Home() {
           <div ref={ambientRef} className="ambient ambient-one" />
           <div className="ambient ambient-two" />
           <div className="story-progress" aria-hidden="true"><span ref={progressRef} /></div>
+          <nav className="mobile-scene-nav" aria-label="首頁內容定位">
+            {labels.map((label, i) => <a href={`#${sceneIds[i]}`} key={label}>{label}</a>)}
+          </nav>
 
           <section id="brand" className={`scene scene-hero ${active === 0 ? "is-active" : ""}`} aria-hidden={sceneIsHidden(0)} inert={sceneIsHidden(0)}>
             <div className="scene-hero-copy">
@@ -220,12 +235,12 @@ export default function Home() {
               <p>SynaiQ 整合企業知識庫、生成式 AI 與 AGI，協助團隊整理分散資料、找到需要的資訊，並逐步把重複工作交給 AI 執行。</p>
               <div className="hero-actions">
                 <a className="primary-button" href="#services" onClick={(event) => { event.preventDefault(); jump(1); }}>認識我們的服務</a>
-                <a className="text-link" href="#contact" onClick={contactLink}>了解 SynaiQ</a>
+                <a className="text-link" href="/about">了解 SynaiQ</a>
               </div>
             </div>
-            <div className="hero-human-visual">
-              <div className="hero-human-halo" aria-hidden="true" />
-              <Image className="hero-digital-human" src="/brand/duoduo-cutout.png" alt="SynaiQ 數位人多多形象示意圖" fill priority sizes="(max-width: 767px) 78vw, (max-width: 1200px) 36vw, 560px" style={{ objectFit: "contain", objectPosition: "center top" }} />
+            <div className="hero-logo-visual">
+              <div className="hero-logo-halo" aria-hidden="true" />
+              <Image className="hero-brand-logo" src="/brand/synaiq-logo-s.webp" alt="SynaiQ 立體品牌標誌" fill priority sizes="(max-width: 767px) 88vw, (max-width: 1200px) 46vw, 680px" style={{ objectFit: "contain", objectPosition: "center" }} />
             </div>
             <div className="scroll-hint" aria-hidden="true"><span />向下捲動</div>
           </section>
@@ -245,10 +260,14 @@ export default function Home() {
           </section>
 
           <section id="products" className={`scene scene-split scene-core ${active === 2 ? "is-active" : ""}`} aria-hidden={sceneIsHidden(2)} inert={sceneIsHidden(2)}>
-            <div className="knowledge-network" aria-hidden="true">
-              <div className="core-rings"><span /><span /><span /></div>
-              <div className="knowledge-core"><small>SYNAIQ</small><strong>PRODUCT<br />SYSTEM</strong></div>
-              {productItems.map((item, i) => <span className={`node node-${i + 1}`} key={item}>{item}</span>)}
+            <div className="product-entry-grid" aria-label="SynaiQ 產品入口">
+              {productItems.map((item) => (
+                <a className="product-entry" href={item.href} key={item.name}>
+                  <strong>{item.name}</strong>
+                  <span>{item.description}</span>
+                  <small>查看產品</small>
+                </a>
+              ))}
             </div>
             <div className="scene-copy"><h2>同一套知識底座，<br />支援不同應用場景。</h2><p>從企業知識庫、生成式 AI 與 AGI，到 Wally 系列互動設備，依照工作流程與使用場域選擇導入方式。</p></div>
           </section>
@@ -259,23 +278,29 @@ export default function Home() {
           </section>
 
           <section id="experience" className={`scene scene-split scene-products ${active === 4 ? "is-active" : ""}`} aria-hidden={sceneIsHidden(4)} inert={sceneIsHidden(4)}>
-            <div className="product-visual experience-visual">
+            <div className="evidence-stage">
               <div className="product-halo" aria-hidden="true" />
-              <div className="experience-main-visual"><Image className="experience-human" src="/brand/duoduo-cutout.png" alt="SynaiQ 數位人多多與 Wally 互動示意" fill sizes="(max-width: 900px) 64vw, 30vw" style={{ objectFit: "contain", objectPosition: "center top" }} /></div>
-              <div className="experience-support" aria-label="Wally 輔助產品視覺">
-                <div className="experience-support-item"><Image src="/brand/wally-1.png" alt="Wally 1 產品照片" fill sizes="120px" /></div>
-                <div className="experience-support-item"><Image src="/brand/wally-mini.png" alt="Wally Mini 產品照片" fill sizes="120px" /></div>
+              <figure className="evidence-frame evidence-primary">
+                <div className="evidence-media"><Image src="/brand/knowledge-base.png" alt="企業知識庫介面截圖" fill sizes="(max-width: 900px) 88vw, 44vw" /></div>
+                <figcaption>企業知識庫介面</figcaption>
+              </figure>
+              <figure className="evidence-frame evidence-secondary">
+                <div className="evidence-media"><Image src="/brand/media-factory.png" alt="生成式 AI 服飾商品情境影像成果畫面" fill sizes="(max-width: 900px) 62vw, 24vw" /></div>
+                <figcaption>生成式 AI 服飾業應用成果</figcaption>
+              </figure>
+              <div className="evidence-devices" aria-label="Wally 場域延伸產品">
+                <div className="evidence-device"><Image src="/brand/wally-1.png" alt="Wally 1 產品照片" fill sizes="96px" /></div>
+                <div className="evidence-device"><Image src="/brand/wally-mini.png" alt="Wally Mini 產品照片" fill sizes="96px" /></div>
               </div>
-              <p className="experience-caption">數位人形象與 Wally 互動示意</p>
             </div>
-            <div className="scene-copy"><h2>從軟體介面，<br />到現場互動設備。</h2><div className="product-pills">{experienceItems.map((label) => <span key={label}>{label}</span>)}</div><p>同一套企業知識可依照使用情境，呈現在工作平台、既有系統或 Wally 系列設備上。</p></div>
+            <div className="scene-copy"><h2>從軟體介面，<br />到現場互動設備。</h2><div className="evidence-list">{evidenceItems.map((label) => <span key={label}>{label}</span>)}</div><p>同一套企業知識可依照使用情境，呈現在工作平台、既有系統或 Wally 系列設備上。</p></div>
           </section>
 
           <section id="action" className={`scene scene-cta ${active === 5 ? "is-active" : ""}`} aria-hidden={sceneIsHidden(5)} inert={sceneIsHidden(5)}>
             <div className="cta-content"><h2>從一個明確的<br />使用場景開始。</h2><p>我們會先釐清資料來源、使用對象與預期成果，再確認適合的部署方式。</p><a className="primary-button" href="#contact" onClick={contactLink}>討論導入需求</a></div>
           </section>
 
-          <nav className="scene-nav" aria-label="首頁內容進度">{labels.map((label, i) => <button type="button" key={label} className={i === active ? "active" : ""} aria-label={label} aria-current={i === active ? "step" : undefined} onClick={() => jump(i)} />)}</nav>
+          <nav className="scene-nav" aria-label="首頁內容進度">{labels.map((label, i) => <button type="button" key={label} className={i === active ? "active" : ""} aria-current={i === active ? "step" : undefined} onClick={() => jump(i)}><span>{label}</span></button>)}</nav>
         </div>
       </section>
 
