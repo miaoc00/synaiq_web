@@ -1,12 +1,17 @@
+/* eslint-disable @next/next/no-sync-scripts -- Local Impeccable live-review bridge is intentionally synchronous. */
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
+import homeSource from "@/content/pages/home.md?raw";
+import { parsePageMarkdown } from "./_content/markdown";
+
+const homeContent = parsePageMarkdown(homeSource);
 
 export const metadata: Metadata = {
   title: {
-    default: "SynaiQ｜企業知識庫、生成式 AI 與 AGI 整合",
-    template: "%s｜SynaiQ",
+    default: homeContent.text("metadata.title"),
+    template: homeContent.text("metadata.title-template"),
   },
-  description: "SynaiQ 協助企業整理知識、串接既有系統，並依照工作流程導入生成式 AI、AGI 與 Wally 系列互動設備。",
+  description: homeContent.text("metadata.description"),
   icons: { icon: "/brand/synaiq-logo-light.svg" },
 };
 

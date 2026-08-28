@@ -1,18 +1,11 @@
 import type { Metadata } from "next";
 import SubpageShell from "../_components/SubpageShell";
+import source from "@/content/pages/agi.md?raw";
+import { MarkdownText, parsePageMarkdown } from "../_content/markdown";
 
-const features = ["先從企業知識庫找出依據，再生成回覆（RAG）", "結合文字與影像查詢結果，提供更多元的資料呈現", "支援多模態語意萃取，以及結構化與非結構化知識索引", "依照企業授權，由 AI 代理拆解步驟並執行任務", "用模型上下文協定（MCP）把外部系統接進工作流程", "支援多種操作介面，對應不同使用情境", "依照任務目標混合運用不同 AI 能力"];
-
-export const metadata: Metadata = {
-  title: "AGI",
-  description: "從企業知識、檢索與推理，延伸到工具串接與代理執行的智慧系統整合框架。",
-};
+const content = parsePageMarkdown(source);
+export const metadata: Metadata = { title: content.text("metadata.title"), description: content.text("metadata.description") };
 
 export default function AgiPage() {
-  return (
-    <SubpageShell eyebrow="AGI FOR ENTERPRISE" title="從理解企業知識，到主動完成任務。" description="企業專屬人工智慧整合框架，整合文字資料、影像資料、推理生成與代理執行，讓 AI 從資訊回應進一步延伸到工具調用與任務完成。" action={{ href: "/contact", label: "規劃 AGI 應用" }}>
-      <section className="subpage-section subpage-two-column"><div><div className="eyebrow">CORE CAPABILITIES</div><h2>知識、推理、工具與代理執行。</h2></div><ol className="subpage-list ordered">{features.map((feature) => <li key={feature}>{feature}</li>)}</ol></section>
-      <section className="subpage-section"><div className="eyebrow">OPERATING FLOW</div><h2>先找到資料，再接上工具完成工作。</h2><p className="subpage-wide-copy">企業資料會先整理成可查詢的知識，再依任務需要進行檢索、推理、工具串接與代理執行。</p><div className="deployment-tags"><span>雲端部署</span><span>本地端部署</span><span>混合部署</span></div></section>
-    </SubpageShell>
-  );
+  return <SubpageShell eyebrow={content.text("hero.eyebrow")} title={content.text("hero.title")} description={content.text("hero.description")} action={{ href: "/contact", label: content.text("action.label") }}><section className="subpage-section subpage-two-column"><div><div className="eyebrow">{content.text("capabilities.eyebrow")}</div><h2><MarkdownText text={content.text("capabilities.title")} /></h2></div><ol className="subpage-list ordered">{content.lines("capabilities.items").map((item) => <li key={item}>{item}</li>)}</ol></section><section className="subpage-section"><div className="eyebrow">{content.text("flow.eyebrow")}</div><h2><MarkdownText text={content.text("flow.title")} /></h2><p className="subpage-wide-copy"><MarkdownText text={content.text("flow.description")} /></p><div className="deployment-tags">{content.lines("deployment.items").map((item) => <span key={item}>{item}</span>)}</div></section></SubpageShell>;
 }

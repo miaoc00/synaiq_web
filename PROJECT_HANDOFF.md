@@ -1,6 +1,6 @@
 # SynaiQ Web 專案交接摘要
 
-> 更新日期：2026-08-13  
+> 更新日期：2026-08-27
 > 專案路徑：`D:\codex\synaiqweb`  
 > 用途：下次新對話開始前，先讀取總覽看板與本檔案，再依「待辦事項」繼續工作。
 
@@ -12,10 +12,12 @@
 
 1. `PROJECT_HANDOFF.md`
 2. `PROJECT_DASHBOARD.md`
-3. `website_content_editable.md`
-4. `website_subpages_content_editable.md`
-5. `網站架構.md`
-6. `文字內容.xlsx`
+3. `content/pages/README.md`
+4. `content/pages/*.md`
+5. `website_content_editable.md`（歷史彙整／核准紀錄）
+6. `website_subpages_content_editable.md`（歷史彙整／核准紀錄）
+7. `網站架構.md`
+8. `文字內容.xlsx`
 
 建議開場指令：
 
@@ -173,6 +175,8 @@ vinext dev --hostname 0.0.0.0
 
 - 已建立首頁內容編輯稿。
 - 已建立其他頁面內容編輯稿。
+- 2026-08-27 起，9 個公開 route 改由 `content/pages/` 內各自的 Markdown 直接驅動；`site.md` 管理共用導覽、CTA 與頁尾，換行由 Markdown 原始行距保留。
+- 編輯方式與頁面對照以 `content/pages/README.md` 為準；舊兩份 editable 文件保留作為彙整與核准紀錄，不再是網站執行時來源。
 - 已依 `文字內容.xlsx` 補入公司、Wally 與 AGI 的既有內容。
 - 文字內容.xlsx 已提供企業知識庫與生成式 AI 的可公開文字，且已套用至對應頁面；目前待補產品截圖、案例與部署／資安說明。
 
@@ -182,7 +186,7 @@ vinext dev --hostname 0.0.0.0
 
 ### `website_content_editable.md`
 
-目前用途：首頁文案編輯稿，不直接等同於網站程式。
+目前用途：首頁歷史彙整與核准紀錄，不再是網站執行時來源；目前首頁直接讀取 `content/pages/home.md`。
 
 內容包括：
 
@@ -205,7 +209,7 @@ vinext dev --hostname 0.0.0.0
 
 ### `website_subpages_content_editable.md`
 
-目前用途：首頁以外的獨立頁面文案稿。
+目前用途：子頁歷史彙整與核准紀錄，不再是網站執行時來源；目前各子頁直接讀取 `content/pages/` 內對應檔案。
 
 目前包含 8 個頁面：
 
@@ -491,3 +495,61 @@ Wally 1 Plus 對應產品照片路徑已由 PM 檢查存在：`品牌素材/照�
 
 - 未新增 `/pricing`、價格、方案等級、比較表或產品事實。
 - 未 commit、push 或部署。
+
+---
+
+## 13. 2026-08-27 首頁本機畫布編輯模式
+
+### 本次範圍與決策
+
+- 依使用者需求，首頁加入可切換的「畫布編輯」模式；公開內容來源仍維持 `content/pages/home.md`，不直接改寫 Markdown。
+- 編輯模式支援點選元件、拖曳位置、雙擊文字 `contentEditable` 編輯，以及面板中的 X／Y 位移與文字大小調整。
+- 調整以 `synaiq-home-canvas-overrides` 儲存在目前瀏覽器的 `localStorage`；可重設單一元件或全部重設。
+- 既有桌機 GSAP 章節滾動、手機直向閱讀與 reduced-motion 行為維持不變；編輯模式只在首頁作用。
+
+### 已完成實作
+
+- `app/page.tsx`：加入首頁畫布編輯狀態、元件標籤、拖曳／文字編輯事件、選取面板與本機儲存。
+- `app/globals.css`：加入選取框、拖曳游標、編輯面板、行動版面與 focus 狀態。
+- `tests/rendered-html.test.mjs`：加入畫布切換鈕、`contentEditable` 與 localStorage key 的回歸斷言。
+
+### 本次即時證據
+
+- `npm.cmd test`：build 完成，8/8 測試通過。
+- `npm.cmd run lint`：exit code 0。
+- `git diff --check`：exit code 0；僅有既有工作區檔案的換行格式警告。
+- 本機 `http://127.0.0.1:3000/?edit=1`：HTTP 200，HTML 含 `canvas-editor-toggle` 與「畫布編輯」。
+
+### 尚未執行與下一步
+
+- 本次環境未提供 Playwright／瀏覽器自動化套件，因此桌機與 `390×844` 的實際像素級截圖與拖曳操作尚待人工瀏覽器補驗。
+- 未 commit、push 或部署。
+
+---
+
+## 14. 2026-08-27 Wally 瀏覽器回饋修正
+
+### 已確認決策
+
+- `/wally` Hero 的系列總覽圖直接融入頁面背景，不保留外框、陰影與說明 caption。
+- 情境展示區不顯示「情境照片待補」占位卡或狀態文字；未來照片直接放在本頁，以全寬橫幅方式呈現。
+
+### 已完成實作
+
+- `app/wally/page.tsx`：移除 Hero frame／caption 與目前情境占位卡，保留 `supporting.photos` 空表作為日後照片入口。
+- `content/pages/wally.md`：移除 Hero caption、情境待補文案與三張占位資料列。
+- `app/globals.css`：新增無框 Hero 與全寬情境照片 framing，產品圖維持透明背景與完整顯示。
+- `tests/rendered-html.test.mjs`：加入 caption、占位文字與舊占位元件不應渲染的回歸斷言。
+
+### 本次即時證據
+
+- `npm.cmd test`：build 完成，8/8 測試通過。
+- `npm.cmd run lint`：exit code 0。
+- `git diff --check`：exit code 0；僅有既有檔案換行格式警告。
+- Impeccable layout detector：回傳空陣列。
+- 本機瀏覽器已確認桌機 Hero 無框、無 caption；390×844 Hero 無框、無水平溢出；DOM 不含「情境照片待補」。
+
+### 尚未執行與下一步
+
+- 情境照片尚未提供；收到照片後，加入 `content/pages/wally.md` 的 `supporting.photos` 表格即可套用全寬版型。
+- 本次未 commit、push 或部署。

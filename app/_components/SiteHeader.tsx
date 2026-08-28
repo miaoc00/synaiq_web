@@ -3,6 +3,11 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
+import siteSource from "@/content/pages/site.md?raw";
+import { parsePageMarkdown } from "../_content/markdown";
+
+const siteContent = parsePageMarkdown(siteSource);
+const navigation = siteContent.table("header.navigation");
 
 export default function SiteHeader() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -34,11 +39,11 @@ export default function SiteHeader() {
 
   return (
     <>
-      <a className="skip-link" href="#main-content">跳至主要內容</a>
+      <a className="skip-link" href="#main-content">{siteContent.text("header.skip-link")}</a>
       <header className="site-header">
       {/* Native navigation keeps vinext production routing from intercepting the home link. */}
       {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
-      <a className="brand" href="/" aria-label="SynaiQ 首頁" onClick={() => closeMenu()}>
+      <a className="brand" href="/" aria-label={siteContent.text("header.home-label")} onClick={() => closeMenu()}>
         <Image src="/brand/synaiq-logo-light.svg" alt="SynaiQ" width={164} height={28} priority />
       </a>
       <button
@@ -47,18 +52,17 @@ export default function SiteHeader() {
         type="button"
         aria-controls="mobile-navigation"
         aria-expanded={isMenuOpen}
-        aria-label={isMenuOpen ? "關閉主要導覽" : "開啟主要導覽"}
+        aria-label={isMenuOpen ? siteContent.text("header.menu-close") : siteContent.text("header.menu-open")}
         onClick={() => setIsMenuOpen((open) => !open)}
       >
         <span aria-hidden="true" />
         <span aria-hidden="true" />
         <span aria-hidden="true" />
       </button>
-      <nav id="mobile-navigation" aria-label="主要導覽" data-open={isMenuOpen}>
-        <a href="/about" aria-current={isCurrent("/about") ? "page" : undefined} onClick={() => closeMenu()}>關於公司</a>
-        <a href="/products" aria-current={isCurrent("/products") ? "page" : undefined} onClick={() => closeMenu()}>產品</a>
-        <a href="/media" aria-current={isCurrent("/media") ? "page" : undefined} onClick={() => closeMenu()}>媒體中心</a>
-        <a className="nav-cta" href="/contact" aria-current={isCurrent("/contact") ? "page" : undefined} onClick={() => closeMenu()}>聯絡我們</a>
+      <nav id="mobile-navigation" aria-label={siteContent.text("header.navigation-label")} data-open={isMenuOpen}>
+        {navigation.map((item) => (
+          <a className={item.style === "cta" ? "nav-cta" : undefined} href={item.href} aria-current={isCurrent(item.href) ? "page" : undefined} onClick={() => closeMenu()} key={item.href}>{item.label}</a>
+        ))}
       </nav>
       </header>
     </>
